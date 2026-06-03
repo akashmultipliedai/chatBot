@@ -6,7 +6,7 @@ const client = new OpenAI({
     apiKey: process.env.SECRET_KEY
 });
 
-
+// Function to interact with OpenAI's chat completion API
 export const convoAskAi= async (inputprompt: any[])=>{
     try{
         // console.log(inputprompt);

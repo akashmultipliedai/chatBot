@@ -7,6 +7,7 @@ const client = new OpenAI({
 });
 
 // Function to interact with OpenAI's chat completion API
+// This function takes an array of messages as input and returns the AI's response
 export const convoAskAi= async (inputprompt: any[])=>{
     try{
         // console.log(inputprompt);

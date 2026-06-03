@@ -1,0 +1,24 @@
+import OpenAI from "openai";
+import "dotenv/config";
+import process from "process";
+
+const client = new OpenAI({
+    apiKey: process.env.SECRET_KEY
+});
+
+
+export const convoAskAi= async (inputprompt: any[])=>{
+    try{
+        // console.log(inputprompt);
+        const response= await client.chat.completions.create({
+            model:"gpt-4o-mini",
+            messages: inputprompt
+        })
+        
+        // console.log(response.choices[0]?.message);
+        return response;
+    }catch(error){
+        console.error("Error in AskAi function:", error);
+        throw error;
+    }
+}

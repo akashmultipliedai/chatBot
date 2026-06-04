@@ -4,6 +4,8 @@ import process from "process";
 const client = new OpenAI({
     apiKey: process.env.SECRET_KEY
 });
+// Function to interact with OpenAI's chat completion API
+// This function takes an array of messages as input and returns the AI's response
 export const convoAskAi = async (inputprompt) => {
     try {
         // console.log(inputprompt);

@@ -1,4 +1,5 @@
 import type { Message } from "../types";
+import ReactMarkdown from "react-markdown";
 
 interface ChatBoxProps {
     messages: Message[];
@@ -16,7 +17,7 @@ const ChatBox = ({ messages }: ChatBoxProps) => {
                             : "assistant-message"
                     }
                 >
-                    {message.content}
+                    <ReactMarkdown>{message.content}</ReactMarkdown>
                 </div>
             ))}
         </div>

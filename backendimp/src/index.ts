@@ -11,7 +11,7 @@ const messages = [
   {
     role: "system",
     content:
-      "You are a helpful assistant and answer user questions conversationally."
+      "You are a helpful assistant and you will answer the question of user in a very helpful way and you will behave like a you are involved in a conversation and answer them with the context with the questions of the user"
   }
 ];
 
@@ -37,7 +37,8 @@ app.post("/chat", async (req, res) => {
 
     res.json({
       response: aiResponse,
-      conversation: messages
+      conversation: messages.filter((msg)=>
+      msg.role!=="system")
     });
   } catch (error) {
     console.error(error);

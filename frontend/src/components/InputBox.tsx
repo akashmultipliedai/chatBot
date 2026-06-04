@@ -16,13 +16,13 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
 
   return (
     <div className="input-container">
-      <input
+      <input className="message-input"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Ask something..."
       />
 
-      <button onClick={handleSubmit}>
+      <button className="send-button" onClick={handleSubmit}>
         Send
       </button>
     </div>

@@ -14,11 +14,27 @@ function App() {
       const response = await axios.post(
         "http://localhost:3000/chat",
         {
-          message
+          message,
+          sessionId: "akash-user"
         }
       );
 
-      setMessages(response.data.conversation);
+       setMessages((prev) => [
+
+            ...prev,
+
+            {
+                role: "user",
+                content: message
+            },
+
+            {
+                role: "assistant",
+                content: response.data.response
+            }
+        ]);
+
+
     } catch (error) {
       console.error(error);
     }

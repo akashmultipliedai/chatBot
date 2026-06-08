@@ -10,9 +10,13 @@ body {
 
   font-family: Arial, sans-serif;
 
-  background: #0f172a;
-
-  color: white;
+  /* background: #f8fafc; */
+  background:
+    radial-gradient(circle at top left,
+      rgba(37, 99, 235, 0.08),
+      transparent 30%),
+    #f8fafc;
+  color: #0f172a;
 
   overflow-x: hidden;
 }
@@ -32,15 +36,36 @@ body {
 
 .navbar {
 
-  padding: 20px 40px;
+  height: 80px;
 
-  border-bottom: 1px solid #334155;
+  padding: 0 40px;
 
-  background: #0f172a;
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background: #F7F7F7;
+
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid #e2e8f0;
 
   position: sticky;
 
   top: 0;
+
+  z-index: 100;
+}
+
+.navbar img {
+
+  height: 45px;
+
+  width: auto;
+
+  object-fit: contain;
 }
 
 .navbar h1 {
@@ -54,27 +79,33 @@ body {
 
 .hero {
 
-  padding: 120px 40px;
+  padding: 140px 60px;
 
-  max-width: 900px;
+  max-width: 950px;
 }
 
 .hero h1 {
 
-  font-size: 70px;
+  font-size: 72px;
 
-  line-height: 1.1;
+  line-height: 1.05;
 
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+
+  color: #0f172a;
+
+  font-weight: 700;
 }
 
 .hero p {
 
   font-size: 24px;
 
-  color: #94a3b8;
+  color: #475569;
 
-  line-height: 1.6;
+  line-height: 1.7;
+
+  max-width: 750px;
 }
 
 
@@ -85,45 +116,72 @@ body {
 
   position: fixed;
 
-  bottom: 20px;
+  bottom: 25px;
 
-  right: 20px;
+  right: 25px;
 
-  width: 70px;
+  width: 75px;
 
-  height: 70px;
+  height: 75px;
 
   border-radius: 50%;
 
   border: none;
 
-  background: #2563eb;
+  background: linear-gradient(135deg,
+      #2563eb,
+      #7c3aed);
 
   color: white;
 
-  font-size: 20px;
+  font-size: 30px;
 
-  font-weight: bold;
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
 
   cursor: pointer;
 
   z-index: 9999;
 
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.4),
+    0 0 20px rgba(124, 58, 237, 0.3);
 
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
+
 
 .chat-toggle-btn:hover {
 
-  transform: scale(1.05);
+  transform: scale(1.08);
+
+  box-shadow:
+    0 15px 40px rgba(37, 99, 235, 0.5),
+    0 0 30px rgba(124, 58, 237, 0.5);
 }
 
+.chat-title {
 
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-icon {
+  font-size: 45px;
+  color: white
+}
 
 /* CHAT WIDGET */
 
 .chat-widget {
+  display: flex;
+
+  flex-direction: column;
 
   position: fixed;
 
@@ -135,34 +193,61 @@ body {
 
   height: 550px;
 
-  background: #1e293b;
+  background: rgba(15, 23, 42, 0.92);
+
+  backdrop-filter: blur(20px);
 
   border-radius: 20px;
 
   overflow: hidden;
 
-  display: flex;
 
-  flex-direction: column;
 
   z-index: 9999;
 
   border: 1px solid #334155;
 
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.5);
+
+
+
+  /* HIDDEN STATE */
+
+  opacity: 0;
+
+  transform:
+    translateY(30px) scale(0.95);
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
+.chat-widget.open {
 
+  opacity: 1;
+
+  transform:
+    translateY(0) scale(1);
+
+  pointer-events: auto;
+}
 
 /* CHAT HEADER */
 
 .chat-header {
 
-  height: 70px;
+  height: 75px;
 
-  background: #0f172a;
-
-  border-bottom: 1px solid #334155;
+  background:
+    linear-gradient(135deg,
+      rgba(16, 185, 129, 0.12),
+      rgba(59, 130, 246, 0.12));
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
 
   display: flex;
 
@@ -171,11 +256,19 @@ body {
   align-items: center;
 
   padding: 0 20px;
+
+  backdrop-filter: blur(20px);
 }
 
 .chat-header h3 {
 
+  color: white;
+
   font-size: 18px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
 }
 
 .chat-header button {
@@ -256,24 +349,18 @@ body {
 
 /* INPUT AREA */
 
-.input-area {
-
-  padding: 15px;
-
+.input-container {
   display: flex;
-
   gap: 10px;
-
-  border-top: 1px solid #334155;
-
-  background: #1e293b;
+  justify-content: center;
+  margin: 10px;
 }
 
 
 
 /* INPUT */
 
-.input-area input {
+.message-input {
 
   flex: 1;
 
@@ -292,18 +379,18 @@ body {
   font-size: 15px;
 }
 
-.input-area input::placeholder {
+.message-input::placeholder {
 
-  color: #94a3b8;
+  color: #607fac;
 }
 
 
 
 /* SEND BUTTON */
 
-.input-area button {
+.send-button {
 
-  padding: 12px 18px;
+  padding: 5px 18px;
 
   border: none;
 
@@ -320,7 +407,7 @@ body {
   transition: 0.2s;
 }
 
-.input-area button:hover {
+.send-button:hover {
 
   background: #1d4ed8;
 }

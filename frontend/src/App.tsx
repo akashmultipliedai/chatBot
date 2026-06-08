@@ -1,4 +1,4 @@
-import Chatwidget from "./components/chatwidget";
+import Chatwidget from "./components/ChatWidget";
 
 import "./App.css";
 
@@ -15,7 +15,7 @@ function App() {
             <nav className="navbar">
 
                 <h1>
-                    Multiplied AI
+                    <img className="logo" src="logo.jpeg" alt="" />
                 </h1>
 
             </nav>

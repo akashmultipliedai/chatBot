@@ -3,7 +3,7 @@ import {z} from "zod";
 
 export const getweather = tool(
     async(input)=>{
-        return `a,jsdglakjb`
+        return `The weather in ${input.city} is currently 24°C with a gentle breeze and clear skies.`
     },{
         name: "get_weather",
         description: "get the current weather for a given city",

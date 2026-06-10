@@ -1,52 +1,38 @@
 import "dotenv/config"
-import  readline from "readline/promises"
-import {stdin as input, stdout as output} from "process"
+import express from "express"
+import cors from "cors"
+import { handleuserMessage } from "./functions/handleuserMesage.js";
 
-import { agent } from "./agents/agents.js"
 
-async function handleuserMesage(userId:string , userPrompt:string) {
-    const threadConfig = {configurable:{thread_id:`user_thread_${userId}`}};
+const app=express();
+app.use(cors());
+app.use(express.json());
 
-    console.log(`User: ${userPrompt}\n`);
-    console.log("Thinking...\n");
-    const result = await agent.invoke({
-        messages: [{
-            role: "user",
-            content: userPrompt
-        }]
-    },
-    threadConfig
-)
 
-    const finalMessage = result.messages[result.messages.length - 1];
-    const answer_to_qusetion=finalMessage?.content;
-    return answer_to_qusetion;
-}
-
-async function main(){
-    const r1= readline.createInterface({input,output});
-    
+app.post("/chat",async (req,res)=>{
     try{
-        while(true){
-        const input_prompt_from_terimnal= await r1.question('Enter Your Details or Enter "exit" to quit: ');
+    const { message, userId } = req.body;
 
-        if(input_prompt_from_terimnal.toLowerCase() === "exit"){
-            r1.close();
-            return;
-        }else{
-            const res1= await handleuserMesage("akash_77",`${input_prompt_from_terimnal}`);
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control","no-cache");
+    res.setHeader("Connection","Keep-alive");
+    res.flushHeaders;
 
-            console.log(res1);
-        }
-    }
+    await handleuserMessage(userId,message,res);
+
+
+    res.write("data:[Done]\n\n");
+    res.end();
+     
     }catch(error){
         console.log(error);
     }
-   
-}
+    
+})
 
-main().catch((error)=>{
-    console.log(error);
+
+app.listen(3000,()=>{
+    console.log("server is running on post 3000")
 })
 
 

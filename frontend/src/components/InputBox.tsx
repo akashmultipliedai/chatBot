@@ -2,9 +2,10 @@ import { useState } from "react";
 
 interface MessageInputProps {
   onSend: (message: string) => void;
+  disabled?: boolean;
 }
 
-const MessageInput = ({ onSend }: MessageInputProps) => {
+const MessageInput = ({ onSend, disabled = false }: MessageInputProps) => {
   const [message, setMessage] = useState("");
 
   const handleSubmit = () => {
@@ -27,11 +28,12 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDownCapture={handleKeyDown}
-        placeholder="Ask something..."
+        placeholder={disabled ? "Waiting for response..." : "Ask something..."}
+        disabled={disabled}
       />
 
-      <button className="send-button" onClick={handleSubmit}>
-        Send
+      <button className="send-button" onClick={handleSubmit} disabled={disabled}>
+        {disabled ? "Sending..." : "Send"}
       </button>
     </div>
   );

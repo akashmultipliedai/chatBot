@@ -1,6 +1,5 @@
 import "dotenv/config"
 import { createAgent } from "langchain";
-// import { getweather } from "../tools/tools.js";
 import { getuserDetails } from "../tools/getuserdetails.js";
 import { MongoClient } from "mongodb";
 import { MongoDBSaver } from "@langchain/langgraph-checkpoint-mongodb";
@@ -10,15 +9,8 @@ import { setServers } from "node:dns";
 
 setServers(["1.1.1.1","8.8.8.8"]);
 
-// --- DEBUGGING BLOCK START ---
-// console.log("--------------------------------------------------");
-// console.log("Current Directory Terminal is running from:", process.cwd());
-// console.log("Is MONGO_URI defined?:", process.env.MONGODB_URL ? "✅ Yes" : "❌ No (It is undefined)");
-// console.log("--------------------------------------------------");
 
-// const MONGO_URI=MONGODB_URL;
 const MONGO_URI = process.env.MONGODB_URL; 
-// console.log(MONGO_URI);
 const client = new MongoClient(`${MONGO_URI}`);
 await client.connect();
 

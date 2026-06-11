@@ -17,7 +17,17 @@ const ChatBox = ({ messages }: ChatBoxProps) => {
                             : "assistant-message"
                     }
                 >
-                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                    {/* Fixed: role is "assistant" and content has ZERO spaces "" */}
+                    {message.role === "assistant" && message.content === "" ? (
+                        <div className="typing-indicator">
+                            {/* Fixed: Removed the "." text from inside the spans */}
+                            <span className="typing-dot"></span>
+                            <span className="typing-dot"></span>
+                            <span className="typing-dot"></span>
+                        </div>
+                    ) : (
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                    )}
                 </div>
             ))}
         </div>

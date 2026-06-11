@@ -3,6 +3,7 @@ import ChatBox from "./ChatBox";
 import MessageInput from "./InputBox";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import type { Message } from "../types";
+import { Rnd } from "react-rnd";
 
 const Chatwidget = () => {
     const [isopen, setIsopen] = useState(false);
@@ -34,7 +35,7 @@ const Chatwidget = () => {
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let isDone = false;
-            let aiText = ""; 
+            let aiText = "";
             let buffer = ""; // Buffer to catch split network packets
 
             // 4. Read the stream loop
@@ -45,7 +46,7 @@ const Chatwidget = () => {
                 // Decode the incoming bytes into text and add to buffer
                 buffer += decoder.decode(value, { stream: true });
                 const lines = buffer.split("\n\n");
-                
+
                 // Keep the last incomplete line in the buffer
                 buffer = lines.pop() || "";
 
@@ -74,7 +75,7 @@ const Chatwidget = () => {
                                 return updatedMessages;
                             });
 
-                            await new Promise((resolve)=> setTimeout(resolve,50));
+                            await new Promise((resolve) => setTimeout(resolve, 50));
                         }
                     } catch (e) {
                         console.error("Failed to parse chunk:", cleanLine);
@@ -95,23 +96,25 @@ const Chatwidget = () => {
                 <TbMessageChatbotFilled />
             </button>
             
-            <div className={isopen ? "chat-widget open" : "chat-widget"}>
-                <div className="chat-header">
-                    <div className="chat-title">
-                        <div className="chat-icon">
-                            <TbMessageChatbotFilled />
+                <div className={isopen ? "chat-widget open" : "chat-widget"}>
+                    <div className="chat-header">
+                        <div className="chat-title">
+                            <div className="chat-icon">
+                                {/* <TbMessageChatbotFilled /> */}
+                                <img className="chat-logo" src="logo.jpeg" alt="" />
+                            </div>
+                            {/* <div>
+                                <h3>Multiplied AI</h3>
+                            </div> */}
                         </div>
-                        <div>
-                            <h3>Multiplied AI</h3>
-                        </div>
+                        <button onClick={() => setIsopen(false)}>X</button>
                     </div>
-                    <button onClick={() => setIsopen(false)}>X</button>
+
+                    <ChatBox messages={messages} />
+
+                    <MessageInput onSend={sendMessage} />
                 </div>
 
-                <ChatBox messages={messages} />
-
-                <MessageInput onSend={sendMessage} />
-            </div>
         </>
     );
 };

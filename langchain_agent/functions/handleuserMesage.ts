@@ -1,30 +1,39 @@
 import "dotenv/config"
-import { agent } from "../agents/agents.js"
+// import { agent } from "../agents/agents.js"
+// import { getCompileCacheDir } from "node:module";
+import { HumanMessage } from "@langchain/core/messages";
+import { compiledGraph } from "../agents/garph.js";
 
-export const handleuserMessage=  async(userId:string , userPrompt:string, res?:any) => {
+export const handleuserMessage = async (userId: string, userPrompt: string, res?: any) => {
     const streamingOptions = {
-        version:"v3" as const,
-        configurable:{thread_id:`user_thread_${userId}`}};
+        version: "v2" as const,
+        configurable: { thread_id: `user_thread_${userId}` }
+    };
 
     console.log(`User: ${userPrompt}\n`);
     console.log("Thinking...\n");
-    const stream = await agent.streamEvents({
-        messages: [{
-            role: "user",
-            content: userPrompt
-        }]
+
+    const stream = compiledGraph.streamEvents({
+        messages: [new HumanMessage(userPrompt)]
     },
-    streamingOptions
-)
-    let fullAnswer="";
+        streamingOptions
+    )
 
-    for await(const message of stream.messages){
-        for await(const delta of message.text){
-            process.stdout.write(delta);
-            fullAnswer+=delta;
+    let fullAnswer = "";
 
-            if(res){
-                res.write(`data: ${JSON.stringify({token : delta})}\n\n`);
+    for await (const event of stream) {
+
+        if (event.event === "on_chat_model_stream") {
+            const chunk = event.data.chunk;
+
+            if (chunk && chunk.content && typeof chunk.content === "string") {
+                process.stdout.write(chunk.content);
+
+                fullAnswer += chunk.content;
+
+                if (res) {
+                    res.write(`data: ${JSON.stringify({ token: chunk.content })}\n\n`);
+                }
             }
         }
     }

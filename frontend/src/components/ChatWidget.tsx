@@ -3,7 +3,7 @@ import ChatBox from "./ChatBox";
 import MessageInput from "./InputBox";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import type { Message } from "../types";
-import { Rnd } from "react-rnd";
+// import { Rnd } from "react-rnd";
 
 const Chatwidget = () => {
     const [isopen, setIsopen] = useState(false);
